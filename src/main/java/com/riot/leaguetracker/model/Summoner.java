@@ -1,0 +1,4 @@
+package com.riot.leaguetracker.model;
+
+public class Summoner {
+}
