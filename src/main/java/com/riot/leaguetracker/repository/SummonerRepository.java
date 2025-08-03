@@ -8,5 +8,4 @@ public interface SummonerRepository extends JpaRepository<Summoner, Long> {
 
     Summoner findByGameNameAndTagLine(String gameName, String tagLine);
 
-
 }
