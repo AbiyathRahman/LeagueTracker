@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface SummonerService {
-    Summoner getSummonerByPuuid(String puuid);
-    Summoner getSummonerByGameNameAndTagLine(String gameName, String tagLine);
-    Summoner saveSummoner(Summoner summoner);
-    Summoner updateSummoner(Summoner summoner);
-    void deleteSummoner(Summoner summoner);
+    Summoner createSummonerByGameName(String gameName, String tagLine);
+    //Summoner getSummonerByGameNameAndTagLine(String gameName, String tagLine);
+    //Summoner saveSummoner(Summoner summoner);
+    //Summoner updateSummoner(Summoner summoner);
+    //void deleteSummoner(Summoner summoner);
 }
