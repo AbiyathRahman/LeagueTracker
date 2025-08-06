@@ -10,9 +10,27 @@ public class SummonerServiceImp implements SummonerService {
     @Autowired
     private SummonerRepository summonerRepository;
 
+
+    private final RiotApiService riotApiService;
+    public SummonerServiceImp(RiotApiService riotApiService) {
+        this.riotApiService = riotApiService;
+    }
+
+
     @Override
     public Summoner createSummonerByGameName(String gameName, String tagLine) {
-        return null;
+
+        String puuid = riotApiService.getPuuidByRIotId(gameName, tagLine);
+        Summoner summoner = summonerRepository.findByPuuid(puuid);
+        if(summoner == null){
+            summoner = new Summoner();
+            summoner.setGameName(gameName);
+            summoner.setTagLine(tagLine);
+            summoner.setPuuid(puuid);
+            summoner.setRegion("NA");
+            summonerRepository.save(summoner);
+        }
+        return summoner;
     }
 
 }
