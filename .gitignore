@@ -31,3 +31,13 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Environment-specific configuration files
+application-local.properties
+application-dev.properties
+.env
+
+# API Keys and sensitive configuration
+**/application-local.properties
+**/application-dev.properties
+

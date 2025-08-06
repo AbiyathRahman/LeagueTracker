@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface RiotApiService {
     String getPuuidByRIotId(String gameName, String tagLine);
-    String getSummonerByPuuid(String puuid);
-    String getPlayerRankAndTier(String puuid)
+    //String getSummonerByPuuid(String puuid);
+    //String getPlayerRankAndTier(String puuid)
 
 }
