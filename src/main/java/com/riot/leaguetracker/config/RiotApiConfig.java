@@ -16,6 +16,8 @@ public class RiotApiConfig {
 
     @Bean
     public WebClient webClient() {
+        System.out.println("API Key loaded: " + ((apiKey != null ? "YES" : "NO")));
+        System.out.println("API Key: " + (apiKey != null ? apiKey.substring(0,5) : "NULL"));
         return WebClient.builder()
                 .defaultHeader("X-Riot-Token", apiKey)
                 .clientConnector(new ReactorClientHttpConnector(

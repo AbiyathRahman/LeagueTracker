@@ -4,7 +4,9 @@ import com.riot.leaguetracker.model.Summoner;
 import com.riot.leaguetracker.repository.SummonerRepository;
 import com.riot.leaguetracker.service.SummonerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SummonerServiceImp implements SummonerService {
 
     @Autowired
