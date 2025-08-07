@@ -18,7 +18,7 @@ public class SummonerController {
 
     @PostMapping("/{gameName}/{tagLine}")
     public ResponseEntity<Summoner> createSummoner(@PathVariable String gameName, @PathVariable String tagLine){
-        if(gameName == null || tagLine == null){
+        if(gameName == null || tagLine == null) {
             return ResponseEntity.badRequest().build();
         }
         Summoner summoner = summonerServiceImp.createSummonerByGameName(gameName, tagLine);
