@@ -40,4 +40,4 @@ application-dev.properties
 # API Keys and sensitive configuration
 **/application-local.properties
 **/application-dev.properties
-
+**/application.properties
