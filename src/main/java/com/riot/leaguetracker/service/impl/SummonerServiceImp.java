@@ -34,5 +34,15 @@ public class SummonerServiceImp implements SummonerService {
         }
         return summoner;
     }
+    @Override
+    public Summoner getSummonerTierByPuuid(String puuid) {
+        String tier = riotApiService.getSummonerTierByPuuid(puuid);
+        Summoner summoner = summonerRepository.findByPuuid(puuid);
+        if(summoner != null){
+            summoner.setTier(tier);
+            summonerRepository.save(summoner);
+        }
+        return summoner;
+    }
 
 }
