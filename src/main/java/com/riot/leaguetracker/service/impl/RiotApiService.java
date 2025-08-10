@@ -40,6 +40,17 @@ public class RiotApiService {
 
 
     }
+    public String getSummonerRankByPuuid(String puuid){
+        String url = "https://na1.api.riotgames.com/lol/league/v4/entries/by-puuid/" + puuid +"?api_key=" + apiKey;
+        String response = webClient.get().uri(url).retrieve().bodyToMono(String.class).block();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try{
+            JsonNode jsonNode = objectMapper.readTree(response);
+            return jsonNode.get(0).get("rank").asText();
+        }catch(Exception e){
+            throw new RuntimeException("Failed to parse response:", e);
+        }
+    }
 
     //String getSummonerByPuuid(String puuid);
     //String getPlayerRankAndTier(String puuid)

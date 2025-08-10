@@ -44,5 +44,15 @@ public class SummonerServiceImp implements SummonerService {
         }
         return summoner;
     }
+    @Override
+    public Summoner getSummonerRankByPuuid(String puuid) {
+        String rank = riotApiService.getSummonerRankByPuuid(puuid);
+        Summoner summoner = summonerRepository.findByPuuid(puuid);
+        if(summoner != null){
+            summoner.setRank(rank);
+            summonerRepository.save(summoner);
+        }
+        return summoner;
+    }
 
 }
