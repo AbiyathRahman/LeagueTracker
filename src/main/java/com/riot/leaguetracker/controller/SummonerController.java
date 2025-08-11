@@ -42,6 +42,18 @@ public class SummonerController {
         }
 
     }
+    @GetMapping("/{puuid}/rank")
+    public ResponseEntity<Summoner> getSummonerRankByPuuid(@PathVariable String puuid){
+        if(puuid == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        Summoner summoner = summonerServiceImp.getSummonerRankByPuuid(puuid);
+        if(summoner != null){
+            return ResponseEntity.ok(summoner);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
 
