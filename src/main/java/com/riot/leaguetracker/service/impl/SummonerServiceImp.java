@@ -54,5 +54,35 @@ public class SummonerServiceImp implements SummonerService {
         }
         return summoner;
     }
+    @Override
+    public Summoner getSummonerWinsByPuuid(String puuid) {
+        Integer wins = riotApiService.getSummonerWinsByPuuid(puuid);
+        Summoner summoner = summonerRepository.findByPuuid(puuid);
+        if(summoner != null){
+            summoner.setWins(wins);
+            summonerRepository.save(summoner);
+        }
+        return summoner;
+    }
+    @Override
+    public Summoner getSummonerLossesByPuuid(String puuid) {
+        Integer losses = riotApiService.getSummonerLossesByPuuid(puuid);
+        Summoner summoner = summonerRepository.findByPuuid(puuid);
+        if(summoner != null){
+            summoner.setLosses(losses);
+            summonerRepository.save(summoner);
+        }
+        return summoner;
+    }
+    @Override
+    public Summoner getSummonerLevelByPuuid(String puuid){
+        Long level = riotApiService.getSummonerLeveledUpByPuuid(puuid);
+        Summoner summoner = summonerRepository.findByPuuid(puuid);
+        if(summoner != null){
+            summoner.setSummonerLevel(level);
+            summonerRepository.save(summoner);
+        }
+        return summoner;
+    }
 
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/summoners")
 public class SummonerController {
 
-    @Autowired
+
     private final SummonerServiceImp summonerServiceImp;
     public SummonerController(SummonerServiceImp summonerServiceImp) {
         this.summonerServiceImp = summonerServiceImp;
@@ -51,6 +51,42 @@ public class SummonerController {
         if(summoner != null){
             return ResponseEntity.ok(summoner);
         }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/{puuid}/wins")
+    public ResponseEntity<Summoner> getSummonerWinsByPuuid(@PathVariable String puuid){
+        if(puuid == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        Summoner summoner = summonerServiceImp.getSummonerWinsByPuuid(puuid);
+        if(summoner != null){
+            return ResponseEntity.ok(summoner);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/{puuid}/losses")
+    public ResponseEntity<Summoner> getSummonerLossesByPuuid(@PathVariable String puuid){
+        if(puuid == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        Summoner summoner = summonerServiceImp.getSummonerLossesByPuuid(puuid);
+        if(summoner != null){
+            return ResponseEntity.ok(summoner);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/{puuid}/level")
+    public ResponseEntity<Summoner> getSummonerLevelByPuuid(@PathVariable String puuid){
+        if(puuid == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        Summoner summoner = summonerServiceImp.getSummonerLevelByPuuid(puuid);
+        if(summoner != null){
+            return ResponseEntity.ok(summoner);
+        }else {
             return ResponseEntity.notFound().build();
         }
     }

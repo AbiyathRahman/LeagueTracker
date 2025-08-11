@@ -51,6 +51,39 @@ public class RiotApiService {
             throw new RuntimeException("Failed to parse response:", e);
         }
     }
+    public Integer getSummonerWinsByPuuid(String puuid){
+        String url = "https://na1.api.riotgames.com/lol/league/v4/entries/by-puuid/" + puuid +"?api_key=" + apiKey;
+        String response = webClient.get().uri(url).retrieve().bodyToMono(String.class).block();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try{
+            JsonNode jsonNode = objectMapper.readTree(response);
+            return jsonNode.get(0).get("wins").asInt();
+        }catch(Exception e){
+            throw new RuntimeException("Failed to parse response:", e);
+        }
+    }
+    public Integer getSummonerLossesByPuuid(String puuid){
+        String url = "https://na1.api.riotgames.com/lol/league/v4/entries/by-puuid/" + puuid +"?api_key=" + apiKey;
+        String response = webClient.get().uri(url).retrieve().bodyToMono(String.class).block();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try{
+            JsonNode jsonNode = objectMapper.readTree(response);
+            return jsonNode.get(0).get("losses").asInt();
+        }catch(Exception e){
+            throw new RuntimeException("Failed to parse response:", e);
+        }
+    }
+    public Long getSummonerLeveledUpByPuuid(String puuid){
+        String url = "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/" + puuid +"?api_key=" + apiKey;
+        String response = webClient.get().uri(url).retrieve().bodyToMono(String.class).block();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try{
+            JsonNode jsonNode = objectMapper.readTree(response);
+            return jsonNode.get("summonerLevel").asLong();
+        }catch(Exception e){
+            throw new RuntimeException("Failed to parse response:", e);
+        }
+    }
 
     //String getSummonerByPuuid(String puuid);
     //String getPlayerRankAndTier(String puuid)
