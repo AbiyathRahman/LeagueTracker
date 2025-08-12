@@ -30,6 +30,11 @@ public class SummonerServiceImp implements SummonerService {
             summoner.setTagLine(tagLine);
             summoner.setPuuid(puuid);
             summoner.setRegion("NA");
+            summoner.setTier(riotApiService.getSummonerTierByPuuid(puuid));
+            summoner.setRank(riotApiService.getSummonerRankByPuuid(puuid));
+            summoner.setWins(riotApiService.getSummonerWinsByPuuid(puuid));
+            summoner.setLosses(riotApiService.getSummonerLossesByPuuid(puuid));
+            summoner.setSummonerLevel(riotApiService.getSummonerLeveledUpByPuuid(puuid));
             summonerRepository.save(summoner);
         }
         return summoner;
@@ -84,5 +89,6 @@ public class SummonerServiceImp implements SummonerService {
         }
         return summoner;
     }
+
 
 }
