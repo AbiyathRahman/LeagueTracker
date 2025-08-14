@@ -1,12 +1,16 @@
 package com.riot.leaguetracker.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @SuppressWarnings("unused")
 @Table(name="participants")
 @Entity
+@Getter
+@Setter
 public class Participants {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,11 +39,11 @@ public class Participants {
 
     //Relationships
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="matchId")
+    @JoinColumn(name="match_id")
     private Match match;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="summoner_puuid", referencedColumnName = "puuid")
+    @JoinColumn(name="puuid", referencedColumnName = "puuid")
     private Summoner summoner;
 
 

@@ -18,7 +18,7 @@ public class Summoner {
     private String tagLine;
     @Column(nullable = false, name = "region")
     private String region;
-    @Column(nullable = false, name = "puuid")
+    @Column(nullable = false, name = "puuid", unique = true )
     private String puuid;
     @Column(nullable = true, name = "summonerLevel")
     private Long summonerLevel;

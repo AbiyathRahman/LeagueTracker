@@ -1,10 +1,14 @@
 package com.riot.leaguetracker.controller;
 
 import com.riot.leaguetracker.model.Summoner;
+import com.riot.leaguetracker.service.impl.RiotApiService;
 import com.riot.leaguetracker.service.impl.SummonerServiceImp;
+import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/summoners")
@@ -12,8 +16,11 @@ public class SummonerController {
 
 
     private final SummonerServiceImp summonerServiceImp;
-    public SummonerController(SummonerServiceImp summonerServiceImp) {
+    private final RiotApiService riotApiService;
+
+    public SummonerController(SummonerServiceImp summonerServiceImp, RiotApiService riotApiService) {
         this.summonerServiceImp = summonerServiceImp;
+        this.riotApiService = riotApiService;
     }
 
     @PostMapping("/{gameName}/{tagLine}")
@@ -41,6 +48,13 @@ public class SummonerController {
             return ResponseEntity.notFound().build();
         }
 
+    }
+    @GetMapping("/{puuid}/matches")
+    public List<String> getMatchIdUsingPuuid(@PathVariable String puuid){
+        if(puuid == null) {
+            return Collections.emptyList();
+        }
+        return riotApiService.getMatchIdUsingPuuid(puuid);
     }
 //    @GetMapping("/{puuid}/rank")
 //    public ResponseEntity<Summoner> getSummonerRankByPuuid(@PathVariable String puuid){

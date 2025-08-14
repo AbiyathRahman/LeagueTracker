@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.List;
+
 @Service
 public class RiotApiService {
     private final WebClient webClient;
@@ -83,6 +85,18 @@ public class RiotApiService {
         }catch(Exception e){
             throw new RuntimeException("Failed to parse response:", e);
         }
+    }
+    public List<String> getMatchIdUsingPuuid(String puuid){
+        String url = "https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=3&api_key=" + apiKey;
+        String response = webClient.get().uri(url).retrieve().bodyToMono(String.class).block();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try{
+            return objectMapper.readValue(response,
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, String.class));
+        }catch(Exception e){
+            throw new RuntimeException("Failed to parse response:" + e.getMessage(), e);
+        }
+
     }
 
     //String getSummonerByPuuid(String puuid);
