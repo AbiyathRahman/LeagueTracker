@@ -29,19 +29,19 @@ public class SummonerController {
         }
 
     }
-//    @GetMapping("/{puuid}")
-//    public ResponseEntity<Summoner> getSummonerTierByPuuid(@PathVariable String puuid){
-//        if(puuid == null) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//        Summoner summoner = summonerServiceImp.getSummonerTierByPuuid(puuid);
-//        if(summoner != null){
-//            return ResponseEntity.ok(summoner);
-//        }else{
-//            return ResponseEntity.notFound().build();
-//        }
-//
-//    }
+    @GetMapping("/{puuid}")
+    public ResponseEntity<Summoner> getSummonerTierByPuuid(@PathVariable String puuid){
+        if(puuid == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        Summoner summoner = summonerServiceImp.getSummonerTierByPuuid(puuid);
+        if(summoner != null){
+            return ResponseEntity.ok(summoner);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+
+    }
 //    @GetMapping("/{puuid}/rank")
 //    public ResponseEntity<Summoner> getSummonerRankByPuuid(@PathVariable String puuid){
 //        if(puuid == null) {
