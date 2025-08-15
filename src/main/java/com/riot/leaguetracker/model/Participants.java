@@ -1,5 +1,6 @@
 package com.riot.leaguetracker.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,6 +41,7 @@ public class Participants {
     //Relationships
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="match_id")
+    @JsonBackReference
     private Match match;
 
     @ManyToOne(fetch = FetchType.LAZY)

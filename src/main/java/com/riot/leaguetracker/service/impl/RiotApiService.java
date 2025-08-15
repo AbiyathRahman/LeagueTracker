@@ -3,6 +3,7 @@ package com.riot.leaguetracker.service.impl;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.riot.leaguetracker.model.Match;
+import com.riot.leaguetracker.model.Participants;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -10,6 +11,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -111,7 +113,7 @@ public class RiotApiService {
             JsonNode info = root.get("info");
             // Create Match
             Match match = new Match();
-            match.setMatchId(root.get("metadat").get("matchId").asText());
+            match.setMatchId(root.get("metadata").get("matchId").asText());
             match.setGameMode(info.get("gameMode").asText());
             match.setQueueId(info.get("queueId").asInt());
             match.setGameDuration(info.get("gameDuration").asLong());
@@ -121,6 +123,23 @@ public class RiotApiService {
                     ZoneOffset.UTC
             ));
             match.setCreatedAt(LocalDateTime.now());
+            JsonNode participantsJson = info.get("participants");
+            List<Participants> participants = new ArrayList<>();
+            for(JsonNode participantJson : participantsJson){
+                Participants participant = new Participants();
+                participant.setMatch(match);
+                participant.setChampionName(participantJson.get("championName").asText());
+                participant.setDeaths(participantJson.get("deaths").asInt());
+                participant.setKills(participantJson.get("kills").asInt());
+                participant.setAssists(participantJson.get("assists").asInt());
+                participant.setTotalDamageDealt(participantJson.get("totalDamageDealt").asInt());
+                participant.setTotalDamageDealtToChampions(participantJson.get("totalDamageDealtToChampions").asInt());
+                participant.setTotalMinionsKilled(participantJson.get("totalMinionsKilled").asInt());
+                participant.setGoldEarned(participantJson.get("goldEarned").asInt());
+                participant.setCreatedAt(LocalDateTime.now());
+                participants.add(participant);
+            }
+            match.setParticipants(participants);
             return match;
         }catch(Exception e){
             throw new RuntimeException("Failed to parse response:" + e.getMessage(), e);

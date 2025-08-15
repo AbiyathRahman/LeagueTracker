@@ -1,5 +1,6 @@
 package com.riot.leaguetracker.controller;
 
+import com.riot.leaguetracker.model.Match;
 import com.riot.leaguetracker.model.Summoner;
 import com.riot.leaguetracker.service.impl.RiotApiService;
 import com.riot.leaguetracker.service.impl.SummonerServiceImp;
@@ -56,6 +57,16 @@ public class SummonerController {
         }
         return riotApiService.getMatchHistory(puuid, 3);
     }
+
+    @GetMapping("/matches/{matchId}")
+        public Match getMatchDetails(@PathVariable String matchId){
+        if(matchId == null) {
+            return null;
+        }
+        return riotApiService.getMatchDetails(matchId);
+
+        }
+
 
 //    @GetMapping("/{puuid}/rank")
 //    public ResponseEntity<Summoner> getSummonerRankByPuuid(@PathVariable String puuid){
