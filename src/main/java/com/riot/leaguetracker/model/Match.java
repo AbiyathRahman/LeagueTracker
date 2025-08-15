@@ -18,7 +18,7 @@ public class Match {
     @Column(name="matchId")
     private String matchId;
     private String gameMode;
-    private String queueType;
+    private Integer queueId;
     private Long gameDuration;
     private LocalDateTime gameCreation;
     private String gameVersion;

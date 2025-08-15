@@ -54,8 +54,9 @@ public class SummonerController {
         if(puuid == null) {
             return Collections.emptyList();
         }
-        return riotApiService.getMatchIdUsingPuuid(puuid);
+        return riotApiService.getMatchHistory(puuid, 3);
     }
+
 //    @GetMapping("/{puuid}/rank")
 //    public ResponseEntity<Summoner> getSummonerRankByPuuid(@PathVariable String puuid){
 //        if(puuid == null) {
