@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.riot.leaguetracker.model.Match;
 import com.riot.leaguetracker.model.Participants;
+import com.riot.leaguetracker.model.Summoner;
+import com.riot.leaguetracker.repository.SummonerRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -17,11 +19,11 @@ import java.util.List;
 @Service
 public class RiotApiService {
     private final WebClient webClient;
-    //private SummonerRepository summonerRepository;
+    private final SummonerRepository summonerRepository;
     @Value("${riot.api.key}")
     private String apiKey;
-    public RiotApiService(WebClient webClient) {
-        this.webClient = webClient;
+    public RiotApiService(WebClient webClient, SummonerRepository summonerRepository) {
+        this.webClient = webClient; this.summonerRepository = summonerRepository;
     }
     public String getPuuidByRIotId(String gameName, String tagLine){
         String url = "https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/" + gameName + "/" + tagLine +"?api_key=" + apiKey;
@@ -137,6 +139,17 @@ public class RiotApiService {
                 participant.setTotalMinionsKilled(participantJson.get("totalMinionsKilled").asInt());
                 participant.setGoldEarned(participantJson.get("goldEarned").asInt());
                 participant.setCreatedAt(LocalDateTime.now());
+//                participant.setChampionLevel(participantJson.get("championLevel").asInt());
+//                participant.setGameId(participantJson.get("gameId").asText());
+                if(participantJson.has("puuid")){
+                    String puuid = participantJson.get("puuid").asText();
+                    Summoner summoner = summonerRepository.findByPuuid(puuid);
+                    if (summoner != null) {
+                        participant.setSummoner(summoner);
+                    }
+
+                    participant.setSummoner(summoner);
+                }
                 participants.add(participant);
             }
             match.setParticipants(participants);

@@ -41,17 +41,23 @@ public class MatchServiceImpl implements MatchService {
 
     private void saveParticipantsWithSummoner(Match match){
         Match savedMatch = matchRepository.save(match);
+        
         for(Participants participant : savedMatch.getParticipants()){
+            // Skip participants without a summoner
+            if(participant.getSummoner() == null) {
+                continue; // Skip to the next participant
+            }
+            
             String puuid = participant.getSummoner().getPuuid();
             Optional<Summoner> summoner = Optional.ofNullable(summonerRepository.findByPuuid(puuid));
             if(summoner.isPresent()){
                 participant.setSummoner(summoner.get());
             }else{
+                // If we can't find the summoner in the database, set it to null
                 participant.setSummoner(null);
             }
-
         }
+        
         participantRepository.saveAll(savedMatch.getParticipants());
-
     }
 }
