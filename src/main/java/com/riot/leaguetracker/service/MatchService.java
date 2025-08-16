@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public interface MatchService {
-    void fetchAndSaveMatchData(String gameId);
-    List<Match> getMatchesForSummoner(String puuid);
+    void fetchAndSaveMatchesData(String puuid, Integer count);
+    //List<Match> getMatchesForSummoner(String puuid);
 
 }

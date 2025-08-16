@@ -10,5 +10,7 @@ import java.util.Optional;
 @Repository
 public interface MatchRepository extends JpaRepository<Match, String> {
     Optional<Match> findMatchByMatchId(String matchId);
+
+    boolean existsByMatchId(String matchId);
 //    List<Match> getRangeOfMatches(String puuid, Integer range);
 }
