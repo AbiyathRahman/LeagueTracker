@@ -53,8 +53,9 @@ public class MatchServiceImpl implements MatchService {
             if(summoner.isPresent()){
                 participant.setSummoner(summoner.get());
             }else{
-                // If we can't find the summoner in the database, set it to null
-                participant.setSummoner(null);
+                Summoner newSummoner = riotApiService.setSummonerByPuuid(puuid);
+                participant.setSummoner(newSummoner);
+
             }
         }
         

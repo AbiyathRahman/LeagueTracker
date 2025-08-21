@@ -32,6 +32,7 @@ public class SummonerController {
         Summoner summoner = summonerServiceImp.createSummonerByGameName(gameName, tagLine);
         if(summoner != null){
             return ResponseEntity.ok(summoner);
+
         }else{
             return ResponseEntity.notFound().build();
         }

@@ -146,9 +146,12 @@ public class RiotApiService {
                     Summoner summoner = summonerRepository.findByPuuid(puuid);
                     if (summoner != null) {
                         participant.setSummoner(summoner);
+                    }else {
+                        Summoner newSummoner = setSummonerByPuuid(puuid);
+                        participant.setSummoner(newSummoner);
                     }
 
-                    participant.setSummoner(summoner);
+
                 }
                 participants.add(participant);
             }
@@ -159,6 +162,32 @@ public class RiotApiService {
         }
 
     }
+    public Summoner setSummonerByPuuid(String puuid){
+        String url = "https://americas.api.riotgames.com/riot/account/v1/accounts/by-puuid/" + puuid +"?api_key=" + apiKey;
+        String response = webClient.get().uri(url).retrieve().bodyToMono(String.class).block();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try{
+            JsonNode jsonNode = objectMapper.readTree(response);
+            Summoner summoner = new Summoner();
+            summoner.setPuuid(puuid);
+            summoner.setGameName(jsonNode.get("gameName").asText());
+            summoner.setTagLine(jsonNode.get("tagLine").asText());
+            summoner.setSummonerLevel(getSummonerLeveledUpByPuuid(puuid));
+            summoner.setWins(getSummonerWinsByPuuid(puuid));
+            summoner.setLosses(getSummonerLossesByPuuid(puuid));
+            summoner.setTier(getSummonerTierByPuuid(puuid));
+            summoner.setRank(getSummonerRankByPuuid(puuid));
+
+            summoner.setRegion("NA");
+            summonerRepository.save(summoner);
+            return summoner;
+        }catch(Exception e){
+            throw new RuntimeException("Failed to parse response:" + e.getMessage(), e);
+        }
+
+
+    }
+
 
     //String getSummonerByPuuid(String puuid);
     //String getPlayerRankAndTier(String puuid)
